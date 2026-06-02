@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <bitset>
 #include <cstdint>
+#include <stdexcept>
 
 using namespace std;
 
@@ -47,29 +48,34 @@ int main() {
         return 1;
     }
 
-    cout << "\nPodaj liczbe w 32-bitowym kodzie binarnym (ciag zer i jedynek):\n";
+    cout << "\nPodaj liczbe w 32-bitowym kodzie binarnym lub 8-znakowym HEX(pomin 0x):\n";
     cin >> ws;
     getline(cin, binaryInput);
 
     binaryInput.erase(remove(binaryInput.begin(), binaryInput.end(), ' '), binaryInput.end());
 
-    if (binaryInput.length() != 32) {
-        cout << "Blad! Wprowadzony ciag musi miec dokladnie 32 znaki." << endl;
-        return 1;
-    }
-
     try {
-        uint32_t inputNum = bitset<32>(binaryInput).to_ulong();
+        uint32_t inputNum = 0;
+
+        if (binaryInput.length() == 32) {
+            inputNum = bitset<32>(binaryInput).to_ulong();
+        } else if (binaryInput.length() == 8) {
+            inputNum = static_cast<uint32_t>(stoul(binaryInput, nullptr, 16));
+        } else {
+            cout << "Blad! Wprowadzony ciag musi miec 32 znaki binarne lub 8 znakow HEX." << endl;
+            return 1;
+        }
+
         uint32_t resultNum = 0;
 
         if (choice == 1) {
             resultNum = convertInternalToIEEE(inputNum);
-            cout << "\nWynik konwersji (IEEE 754 binarnie):" << endl;
+            cout << "\nWynik konwersji do IEEE 754" << endl;
         } else {
             resultNum = convertIEEEToInternal(inputNum);
-            cout << "\nWynik konwersji (Kod wewnetrzny binarnie):" << endl;
+            cout << "\nWynik konwersji do kodu wewnetrznego" << endl;
         }
-
+        cout << "Wartosc binarna: ";
         string resultStr = bitset<32>(resultNum).to_string();
         
         cout << resultStr.substr(0, 8) << " " 
@@ -83,7 +89,7 @@ int main() {
         cin.get();
 
     } catch (const invalid_argument& e) {
-        cout << "Blad! Ciag zawiera niedozwolone znaki (tylko 0 i 1)." << endl;
+        cout << "Blad! Ciag zawiera niedozwolone znaki (binarnie: tylko 0 i 1, HEX: tylko 0-9 i A-F)." << endl;
 
         cout << "\nNacisnij Enter, aby zamknac program...";
         cin.get();
