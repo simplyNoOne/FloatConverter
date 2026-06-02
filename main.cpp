@@ -63,6 +63,8 @@ int main() {
             inputNum = static_cast<uint32_t>(stoul(binaryInput, nullptr, 16));
         } else {
             cout << "Blad! Wprowadzony ciag musi miec 32 znaki binarne lub 8 znakow HEX." << endl;
+            cout << "\nNacisnij Enter, aby zamknac program...";
+            cin.get();
             return 1;
         }
 
