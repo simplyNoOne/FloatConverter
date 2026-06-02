@@ -2,6 +2,7 @@
 #include <string>
 #include <algorithm>
 #include <bitset>
+#include <iomanip>
 #include <cstdint>
 #include <stdexcept>
 
@@ -85,7 +86,7 @@ int main() {
              << resultStr.substr(16, 8) << " " 
              << resultStr.substr(24, 8) << endl;
 
-        cout << "Wartosc HEX: 0x" << hex << uppercase << resultNum << endl;
+        cout << "Wartosc HEX: 0x" << hex << uppercase << setw(8) << setfill('0') << resultNum << endl;
 
         cout << "\nNacisnij Enter, aby zamknac program...";
         cin.get();
