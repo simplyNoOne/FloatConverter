@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include <bitset>
 #include <cstdint>
 
@@ -78,8 +79,14 @@ int main() {
 
         cout << "Wartosc HEX: 0x" << hex << uppercase << resultNum << endl;
 
+        cout << "\nNacisnij Enter, aby zamknac program...";
+        cin.get();
+
     } catch (const invalid_argument& e) {
         cout << "Blad! Ciag zawiera niedozwolone znaki (tylko 0 i 1)." << endl;
+
+        cout << "\nNacisnij Enter, aby zamknac program...";
+        cin.get();
         return 1;
     }
 

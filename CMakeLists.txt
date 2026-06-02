@@ -11,9 +11,10 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build." FORCE)
 endif()
 
-if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -march=native -mtune=native")
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(converter PRIVATE -O3 -march=native -mtune=native)
+    target_link_options(converter PRIVATE -static -static-libgcc -static-libstdc++)
 elseif(MSVC)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /O2 /Ob2 /Oi")
+    target_compile_options(converter PRIVATE /O2 /Ob2 /Oi)
 endif()
 
